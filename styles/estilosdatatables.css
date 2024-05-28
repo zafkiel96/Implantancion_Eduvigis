@@ -1,0 +1,121 @@
+#recentRegistersTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+#recentRegistersTable th,
+#recentRegistersTable td {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 10px;
+  font-size: 1em;
+}
+#recentRegistersTable th {
+  background-color: #f2f2f2;
+}
+.dataTables_length select,
+.dataTables_length label {
+  color: black;
+}
+#recentRegistersTable tbody tr:hover {
+  background-color: #287bff !important;
+  color: white;
+}
+#recentRegistersTable tbody tr:hover td {
+  background-color: #287bff !important;
+  color: white !important;
+}
+
+.cardBox {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 0px 0;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .numbers {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.card .cardName {
+  font-size: 1.2em;
+  color: #888;
+}
+
+.card .iconBox {
+  font-size: 2.5em;
+  color: #3c8dbc;
+}
+
+.detailsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.details,
+.recentBeneficios {
+  width: 90%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recentBeneficios {
+  width: 96%;
+  margin-right: 20px;
+  padding-left: 0px;
+  margin-left: 3px;
+}
+
+.details {
+  width: 96%;
+  margin-left: 20px; /* Agregar margen izquierdo */
+}
+
+.details .cardHeader,
+.recentBeneficios .cardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.details .cardHeader h2,
+.recentBeneficios .cardHeader h2 {
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Estilos para agrandar el contenido del dataTable */
+#recentRegistersTable {
+  width: 100%; /* Mantener el 100% del contenedor */
+}
+
+#recentRegistersTable th,
+#recentRegistersTable td {
+  font-size: 1.2em; /* Aumentar el tamaño de la fuente */
+  padding: 7px; /* Aumentar el espaciado dentro de las celdas */
+}
+
+#recentRegistersTable th {
+  background-color: #f2f2f2;
+}
+
+#recentRegistersTable td {
+  border-bottom: 1px solid #ddd;
+}
