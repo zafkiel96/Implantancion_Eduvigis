@@ -10,6 +10,17 @@
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
+  border: 1px solid black;
+}
+.btn-activar {
+  margin-right: 15px;
+  background-color: transparent;
+  color: #0c0b0b;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .btn-ver {
@@ -23,10 +34,209 @@
 .btn-eliminar {
   background-color: red; /* Rojo claro */
 }
+.dataTables_wrapper .dataTables_length select {
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 5px;
+  background-color: #287bff;
+  padding: 4px;
+}
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  text-align: center;
+}
+.custom-table th,
+.custom-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.custom-table th {
+  background-color: #f2f2f2;
+}
+.custom-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.custom-table-hover tbody tr:hover {
+  background-color: #287bff !important;
+  color: white !important;
+}
+.custom-btn {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+.viewBtn {
+  background-color: #4caf50;
+  color: white;
+}
+.editBtn {
+  background-color: #287bff;
+  color: white;
+}
+/* Estilos para la paginación */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  text-align: center;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #007bff;
+  color: black;
+  border: 1px solid #007bff;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #e9ecef;
+  color: black;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+  cursor: default;
+  background-color: #eee;
+  color: #aaa;
+  border: 1px solid #ddd;
+}
+/* Estilos específicos para los números de la paginación */
+.dataTables_wrapper .dataTables_paginate .paginate_button:not(.current):hover {
+  background-color: black;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  font-weight: bold;
+  color: black;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table,
+th,
+td {
+  border: 1px solid #ddd;
+}
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+#editForm label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+#editForm input,
+#editForm select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+#editForm input:focus,
+#editForm select:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+#editForm button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#editForm button:hover {
+  background-color: #45a049;
+}
+#registerForm label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+#registerForm input,
+#registerForm select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+#registerForm input:focus,
+#registerForm select:focus {
+  border-color: #66afe9;
+  outline: none;
+  box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+#registerForm button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#registerForm button:hover {
+  background-color: #45a049;
+}
+#registerBtn {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+  width: 15%;
+}
+
+#registerBtn:hover {
+  background-color: #45a049;
+}
+
+table.dataTable {
+  width: 100%;
+  margin: 0 auto;
+}
+.dataTables_length,
+.dataTables_info {
+  color: black; /* Cambiar color del texto dentro de "Show entries" y "Mostrando X de X entradas" */
+}
+.custom-table-hover tbody tr:hover {
+  background-color: #287bff !important;
+  color: black !important;
+}
+.custom-table-hover tbody tr:hover td {
+  color: black !important;
+}
+.btn-activar {
+  background-color: yellow; /* Rojo claro */
+}
 
 .btn-ver:hover,
 .btn-editar:hover,
-.btn-eliminar:hover {
+.btn-eliminar:hover,
+.btn-activar:hover {
   filter: brightness(110%);
 }
 

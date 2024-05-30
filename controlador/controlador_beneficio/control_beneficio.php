@@ -18,7 +18,6 @@
             beneficios b ON hb.id_beneficio = b.id_beneficio
         ORDER BY 
             hb.fecha DESC";
-
             $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -34,6 +33,5 @@
                 } else {
                     echo '<tr><td colspan="4">No se encontraron registros.</td></tr>';
                 }
-
             $conn->close();
 ?>

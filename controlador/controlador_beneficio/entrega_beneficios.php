@@ -1,28 +1,22 @@
 <?php
 session_start();
 include '../conexion.php';
-
 $response = array();
-
 if (!isset($_SESSION['user_id'])) {
     $response['error'] = "Acceso no autorizado.";
     echo json_encode($response);
     exit;
 }
-
 $id_usuario = $_SESSION['user_id'];
 $beneficio_id = $_POST['beneficio_id'];
 $grupo_familiar_id = $_POST['grupo_familiar_id'];
 $descripcion = $conn->real_escape_string($_POST['descripcion']);
 $observacion = $conn->real_escape_string($_POST['observacion']);
-
 echo "ID Usuario: $id_usuario<br>";
 echo "Beneficio ID: $beneficio_id<br>";
 echo "Grupo Familiar ID: $grupo_familiar_id<br>";
 echo "Descripción: $descripcion<br>";
 echo "Observación: $observacion<br>";
-
-// Obtener el id_tipo_usuario
 $sql_tipo_usuario = "SELECT id_tipo_usuario FROM tipos_usuarios WHERE id_usuario = ?";
 $stmt_tipo_usuario = $conn->prepare($sql_tipo_usuario);
 if ($stmt_tipo_usuario) {
@@ -41,8 +35,6 @@ if (empty($id_tipo_usuario)) {
     echo json_encode($response);
     exit;
 }
-
-// Obtener id_manzana e id_casa
 $sql_casa = "SELECT id_manzana, id_casa FROM casas WHERE id_grupo_familiar = ?";
 $stmt_casa = $conn->prepare($sql_casa);
 if ($stmt_casa) {
@@ -61,8 +53,6 @@ if (empty($id_casa)) {
     echo json_encode($response);
     exit;
 }
-
-// Verificar si ya existe un registro para el mismo beneficio, grupo familiar y día
 $sql_verificar = "SELECT COUNT(*) FROM historicos_beneficios 
                   WHERE id_grupo_flia = ? AND id_beneficio = ? AND DATE(fecha) = CURDATE()";
 $stmt_verificar = $conn->prepare($sql_verificar);
@@ -71,8 +61,7 @@ if ($stmt_verificar) {
     $stmt_verificar->execute();
     $stmt_verificar->bind_result($count);
     $stmt_verificar->fetch();
-    $stmt_verificar->close();
-    
+    $stmt_verificar->close(); 
     if ($count > 0) {
         $response['error'] = "Este beneficio ya ha sido entregado a este grupo familiar.";
         echo json_encode($response);
@@ -83,7 +72,6 @@ if ($stmt_verificar) {
     echo json_encode($response);
     exit;
 }
-// Insertar nuevo registro en historicos_beneficios
 $sql = "INSERT INTO historicos_beneficios (id_usuario, id_tipo_usuario, id_grupo_flia, id_manzana, id_casa, id_beneficio, fecha, descripcion, observacion, status) 
 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, ?, ?)";
 $stmt = $conn->prepare($sql);
@@ -91,18 +79,14 @@ if ($stmt) {
     $status = 'Entregado';
     $stmt->bind_param("iiiisssss", $id_usuario, $id_tipo_usuario, $grupo_familiar_id, $id_manzana, $id_casa, $beneficio_id, $descripcion, $observacion, $status);
     if ($stmt->execute()) {
-        // Entrega registrada correctamente
         echo "success";
     } else {
-        // Error al procesar la entrega
         echo "Error al procesar la entrega.";
     }
     $stmt->close();
 } else {
     echo "Error en la preparación de la consulta de inserción: " . $conn->error;
 }
-
 $conn->close();
-
 echo json_encode($response);
 ?>

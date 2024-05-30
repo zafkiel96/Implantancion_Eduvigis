@@ -1,13 +1,11 @@
 <?php require_once "vista_superior.php"?>
 <title>Dashboard</title>
 <style>
-    /* Media Queries for responsiveness */
     @media (max-width: 1200px) {
         .cardBox {
             grid-template-columns: repeat(3, 1fr);
         }
     }
-
     @media (max-width: 992px) {
         .cardBox {
             grid-template-columns: repeat(2, 1fr);
@@ -17,38 +15,30 @@
             grid-template-columns: 1fr;
         }
     }
-
     @media (max-width: 768px) {
         .cardBox {
             grid-template-columns: 1fr;
         }
     }
-
     @media (max-width: 576px) {
         .card, .details, .recentBeneficios {
             padding: 10px;
         }
-
         .card .numbers {
             font-size: 1.5em;
         }
-
         .card .cardName {
             font-size: 1em;
         }
-
         .card .iconBox {
             font-size: 2em;
         }
-
         .details .cardHeader h2, .recentBeneficios .cardHeader h2 {
             font-size: 1.2em;
         }
-
         .recentBeneficios table h4 {
             font-size: 0.9em;
         }
-
         .recentBeneficios table span {
             font-size: 0.8em;
         }
@@ -92,7 +82,6 @@
         </div>
     </div>
 </div>
-
 <div class="detailsContainer">
     <div class="details">
     <script src="../scripts/jquery-3.6.0.min.js"></script>
@@ -116,7 +105,6 @@
                 include '../controlador/conexion.php';
                 $sql = "SELECT primer_nombre, primer_apellido, cedula, status FROM personas ORDER BY id_persona DESC LIMIT 10";
                 $result = $conn->query($sql);
-
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
@@ -133,7 +121,6 @@
                 ?>
             </tbody>
         </table>
-
     <script>
         $(document).ready(function() {
             $('#recentRegistersTable').DataTable({
@@ -156,7 +143,6 @@
         });
     </script>
     </div>
-
     <div class="recentBeneficios">
     <table class="mapa">
                 <div class="cardHeader">
