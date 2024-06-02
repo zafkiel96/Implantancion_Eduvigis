@@ -1,5 +1,6 @@
 <?php require_once "vista_superior.php"; ?>
     <meta charset="UTF-8">
+    <html lang="es">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grupo Familiar</title>
     <link rel="stylesheet" href="../../styles/styles.css">
@@ -230,11 +231,78 @@ table.dataTable tbody tr:hover td{
     background-color: #287bff !important;
     cursor: pointer;
 }
+
+        #addGroupForm label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        #addGroupForm input[type="text"],
+        #addGroupForm select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #addGroupForm input[type="text"]:focus,
+        #addGroupForm select:focus {
+            border-color: #66afe9;
+            outline: none;
+            box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+        }
+        #addGroupForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #addGroupForm button:hover {
+            background-color: #218838;
+        }
+        #assignPersonForm label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        #assignPersonForm input[type="text"],
+        #assignPersonForm select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #assignPersonForm input[type="text"]:focus,
+        #assignPersonForm select:focus {
+            border-color: #66afe9;
+            outline: none;
+            box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+        }
+        #assignPersonForm button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #assignPersonForm button:hover {
+            background-color: #218838;
+        }
 </style>
 <div class="details section">
         <div class="recentRegisters">
 <div class="container">
-<h1>Grupos Familiares</h1>
+<h1>Gestión de Grupos Familiares</h1>
 <button  id="registerBtn">Registrar +</button>
         <table id="gruposTable" class="display">
             <thead>
@@ -247,7 +315,7 @@ table.dataTable tbody tr:hover td{
         </table>
     </div>
 
-    <script>
+<script>
         $(document).ready(function() {
             var table = $('#gruposTable').DataTable({
                 "language": {
@@ -274,7 +342,7 @@ table.dataTable tbody tr:hover td{
                     { "data": "status" },
                     {
                         "data": null,
-                        "defaultContent": "<button class='viewBtn'>Ver</button> <button class='editBtn'>Editar</button> <button class='assignBtn'>Asignar</button>"
+                        "defaultContent": "<button class='viewBtn'>Ver</button> <button class='editBtn'>Editar</button> <button class='assignBtn'>Asignar Persona</button>"
                     }
                 ]
             });
@@ -292,7 +360,7 @@ table.dataTable tbody tr:hover td{
                                 <option value="Inactivo">Inactivo</option>
                             </select>
                         </form>
-                    `,
+                    `, allowOutsideClick: false,
                     showCancelButton: true,
                     confirmButtonText: 'Registrar',
                     preConfirm: () => {
@@ -324,30 +392,55 @@ table.dataTable tbody tr:hover td{
             });
 
             $('#gruposTable tbody').on('click', 'button.viewBtn', function() {
-                var data = table.row($(this).parents('tr')).data();
-                $.ajax({
-                    url: `control_grpfamiliar.php?action=view_group&id_grupo_flia=${data.id_grupo_flia}`,
-                    method: 'GET',
-                    success: function(response) {
-                        var personas = JSON.parse(response);
-                        var personasHtml = personas.map(persona => `
-                            <p><strong>Nombre:</strong> ${persona.primer_nombre} ${persona.primer_apellido}</p>
-                            <p><strong>Cédula:</strong> ${persona.cedula}</p>
-                            <p><strong>Parentesco:</strong> ${persona.parentesco}</p>
-                            <p><strong>Jefe de Familia:</strong> ${persona.jefe_familia}</p>
-                            <hr>
-                        `).join('');
+    var data = table.row($(this).parents('tr')).data();
+    $.ajax({
+        url: `control_grpfamiliar.php?action=view_group&id_grupo_flia=${data.id_grupo_flia}`,
+        method: 'GET',
+        success: function(response) {
+            var personas = JSON.parse(response);
+            
+            personas.sort((a, b) => (b.jefe_familia === 'Sí') - (a.jefe_familia === 'Sí'));
 
-                        Swal.fire({
-                            title: 'Datos del Grupo Familiar',
-                            html: personasHtml
-                        });
-                    },
-                    error: function() {
-                        Swal.fire('Error', 'Hubo un error al cargar los datos del grupo familiar.', 'error');
-                    }
-                });
+            var personasHtml = personas.map(persona => `
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                    <thead style="background-color: #007bff; color: white;">
+                        <tr>
+                            <th style="color: black; padding: 10px; border: 1px solid #ddd;">Campos</th>
+                            <th style="color: black; padding: 10px; border: 1px solid #ddd;">Datos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #f2f2f2;">
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Nombre</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${persona.primer_nombre} ${persona.primer_apellido}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Cédula</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${persona.cedula}</td>
+                        </tr>
+                        <tr style="background-color: #f2f2f2;">
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Parentesco</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${persona.parentesco}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><strong>Jefe de Familia</strong></td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">${persona.jefe_familia}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `).join('');
+
+            Swal.fire({
+                title: 'Datos del Grupo Familiar',
+                html: personasHtml,
+                allowOutsideClick: false
             });
+        },
+        error: function() {
+            Swal.fire('Error', 'Hubo un error al cargar los datos del grupo familiar.', 'error');
+        }
+    });
+});
 
             $('#gruposTable tbody').on('click', 'button.editBtn', function() {
                 var data = table.row($(this).parents('tr')).data();
@@ -378,6 +471,7 @@ table.dataTable tbody tr:hover td{
                                     <select id="edit_jefe_familia">${jefeOptions}</select>
                                 </form>
                             `,
+                            allowOutsideClick: false,
                             showCancelButton: true,
                             confirmButtonText: 'Actualizar',
                             preConfirm: () => {
@@ -416,56 +510,72 @@ table.dataTable tbody tr:hover td{
             });
 
             $('#gruposTable tbody').on('click', 'button.assignBtn', function() {
-                var data = table.row($(this).parents('tr')).data();
-                $.ajax({
-                    url: 'control_grpfamiliar.php?action=list_personas',
-                    method: 'GET',
-                    success: function(response) {
-                        var personas = JSON.parse(response);
-                        var options = '';
-                        personas.forEach(function(persona) {
-                            options += `<option value="${persona.id_persona}">${persona.primer_nombre} ${persona.primer_apellido}</option>`;
-                        });
-
-                        Swal.fire({
-                            title: 'Asignar Persona al Grupo Familiar',
-                            html: `
-                                <form id="assignPersonForm">
-                                    <input type="hidden" id="assign_id_grupo_flia" value="${data.id_grupo_flia}">
-                                    <label for="assign_persona">Persona:</label>
-                                    <select id="assign_persona">${options}</select>
-                                </form>
-                            `,
-                            showCancelButton: true,
-                            confirmButtonText: 'Asignar',
-                            preConfirm: () => {
-                                const id_grupo_flia = $('#assign_id_grupo_flia').val();
-                                const id_persona = $('#assign_persona').val();
-
-                                return { id_grupo_flia: id_grupo_flia, id_persona: id_persona };
-                            }
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                $.ajax({
-                                    url: 'control_grpfamiliar.php?action=assign',
-                                    method: 'POST',
-                                    data: result.value,
-                                    success: function(response) {
-                                        Swal.fire('Asignado', 'La persona ha sido asignada al grupo familiar.', 'success');
-                                        table.ajax.reload();
-                                    },
-                                    error: function() {
-                                        Swal.fire('Error', 'Hubo un error al asignar la persona.', 'error');
-                                    }
-                                });
-                            }
-                        });
-                    },
-                    error: function() {
-                        Swal.fire('Error', 'Hubo un error al cargar las personas disponibles.', 'error');
-                    }
-                });
+    var data = table.row($(this).parents('tr')).data();
+    $.ajax({
+        url: 'control_grpfamiliar.php?action=list_personas',
+        method: 'GET',
+        success: function(response) {
+            var personas = JSON.parse(response);
+            var optionsPersonas = '';
+            personas.forEach(function(persona) {
+                optionsPersonas += `<option value="${persona.id_persona}">${persona.primer_nombre} ${persona.primer_apellido}</option>`;
             });
-        });
+
+            var optionsParentesco = `
+                <option value="Padre">Padre</option>
+                <option value="Madre">Madre</option>
+                <option value="Hijo(a)">Hijo(a)</option>
+                <option value="Hermano(a)">Hermano(a)</option>
+                <option value="Suegro(a)">Suegro(a)</option>
+                <option value="Yerno">Yerno</option>
+                <option value="Nuera">Nuera</option>
+            `;
+
+            Swal.fire({
+                title: 'Asignar Persona al Grupo Familiar',
+                html: `
+                    <form id="assignPersonForm">
+                        <input type="hidden" id="assign_id_grupo_flia" value="${data.id_grupo_flia}">
+                        <label for="assign_persona">Persona:</label>
+                        <select id="assign_persona">${optionsPersonas}</select>
+                        <br>
+                        <label for="assign_parentesco">Parentesco:</label>
+                        <select id="assign_parentesco">${optionsParentesco}</select>
+                    </form>
+                `,
+                allowOutsideClick: false,
+                showCancelButton: true,
+                confirmButtonText: 'Asignar',
+                preConfirm: () => {
+                    const id_grupo_flia = $('#assign_id_grupo_flia').val();
+                    const id_persona = $('#assign_persona').val();
+                    const parentesco = $('#assign_parentesco').val();
+
+                    return { id_grupo_flia: id_grupo_flia, id_persona: id_persona, parentesco: parentesco };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'control_grpfamiliar.php?action=assign',
+                        method: 'POST',
+                        data: result.value,
+                        success: function(response) {
+                            Swal.fire('Asignado', 'La persona ha sido asignada al grupo familiar.', 'success');
+                            table.ajax.reload();
+                        },
+                        error: function() {
+                            Swal.fire('Error', 'Hubo un error al asignar la persona.', 'error');
+                        }
+                    });
+                }
+            });
+        },
+        error: function() {
+            Swal.fire('Error', 'Hubo un error al cargar las personas disponibles.', 'error');
+        }
+    });
+});
+            });
+        
     </script>
 </section>

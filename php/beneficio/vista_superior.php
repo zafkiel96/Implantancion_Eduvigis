@@ -28,7 +28,7 @@ if (isset($_SESSION['user_id'])) {
 <body>
     <div class="container">
         <div class="navigation">
-        <ul>
+            <ul>
         <li>
                     <a href="">
                     <img src="../../img/ico.png" width="70" height="35" style="margin-top: 20px;">

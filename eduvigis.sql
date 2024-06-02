@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2024 a las 23:27:27
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 02-06-2024 a las 20:05:00
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `santa_eduviges(finall)`
+-- Base de datos: `eduvigis`
 --
 
 -- --------------------------------------------------------
@@ -710,6 +710,7 @@ INSERT INTO `historicos_beneficios` (`id_hist_beneficio`, `id_usuario`, `id_tipo
 
 CREATE TABLE `manzanas` (
   `id_manzana` int(10) NOT NULL,
+  `id_jefe_manzana` int(10) DEFAULT NULL,
   `numero_manzana` int(10) NOT NULL,
   `descripcion` varchar(50) NOT NULL,
   `observacion` varchar(255) NOT NULL
@@ -719,11 +720,11 @@ CREATE TABLE `manzanas` (
 -- Volcado de datos para la tabla `manzanas`
 --
 
-INSERT INTO `manzanas` (`id_manzana`, `numero_manzana`, `descripcion`, `observacion`) VALUES
-(1, 1, 'Manzana 1 con n casas', 'Ninguna'),
-(2, 2, 'Manzana 2 con n casas', 'Ninguna'),
-(3, 3, 'Manzana 3 con n casas', 'Ninguna'),
-(4, 4, 'Manzana 4 con n casas', 'Ninguna');
+INSERT INTO `manzanas` (`id_manzana`, `id_jefe_manzana`, `numero_manzana`, `descripcion`, `observacion`) VALUES
+(1, 2, 1, 'Manzana 1 con n casas', 'Ninguna'),
+(2, NULL, 2, 'Manzana 2 con n casas', 'Ninguna'),
+(3, NULL, 3, 'Manzana 3 con n casas', 'Ninguna'),
+(4, NULL, 4, 'Manzana 4 con n casas', 'Ninguna');
 
 -- --------------------------------------------------------
 
@@ -2243,11 +2244,11 @@ INSERT INTO `parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) VALUES
 CREATE TABLE `personas` (
   `id_persona` int(11) NOT NULL,
   `id_tipo_usuario` int(10) NOT NULL,
-  `id_grupo_flia` int(10) NOT NULL,
+  `id_grupo_flia` int(10) DEFAULT NULL,
   `tipo_cedula` enum('Venezolano','Extranjero','Juridico') NOT NULL,
   `cedula` int(8) NOT NULL,
-  `serial_carnet_patria` int(10) NOT NULL,
-  `codigo_carnet_patria` int(10) NOT NULL,
+  `serial_carnet_patria` int(10) DEFAULT NULL,
+  `codigo_carnet_patria` int(10) DEFAULT NULL,
   `primer_nombre` varchar(50) NOT NULL,
   `segundo_nombre` varchar(50) NOT NULL,
   `primer_apellido` varchar(50) NOT NULL,
@@ -2267,10 +2268,13 @@ CREATE TABLE `personas` (
 --
 
 INSERT INTO `personas` (`id_persona`, `id_tipo_usuario`, `id_grupo_flia`, `tipo_cedula`, `cedula`, `serial_carnet_patria`, `codigo_carnet_patria`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `genero`, `fecha_nacimiento`, `telefono`, `correo`, `parentesco`, `numero_hijos`, `fecha_registro`, `status`) VALUES
-(1, 1, 1, 'Venezolano', 31204020, 1004185344, 1234567895, 'Jhon', 'No tiene', 'Vasquez', 'Gomez', 'Hombre', '2003-11-25', '04245421697', 'kacosvasquez14@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
-(2, 2, 2, 'Venezolano', 29868346, 1234567845, 1234567896, 'Moises', 'Alberto', 'Flores', 'Pineda', 'Hombre', '2002-03-21', '04125594556', 'moisesflores210303@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
-(3, 3, 3, 'Venezolano', 30317640, 1234567844, 1234567888, 'Jaiker', 'Jesus', 'Perdomo', 'Palacio', 'Hombre', '2002-11-11', '04120515029', 'palaciojaiker@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
-(4, 4, 4, 'Venezolano', 25753161, 1234567777, 1234567799, 'Wilfran', 'Jose', 'Valera', 'Rincon', 'Hombre', '2000-05-12', '04126722287', 'wilfranvalera@gmail.com', 'Padre', 0, '2024-05-19', 'Activo');
+(1, 1, 0, 'Venezolano', 31204020, NULL, NULL, 'Jhon', '', 'Vasquez', '', 'Hombre', '2003-11-25', '04245421697', 'kacosvasquez14@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
+(2, 1, 0, 'Venezolano', 29868346, 1234567845, 1234567896, 'Moises', 'Alberto', 'Flores', 'Pineda', 'Hombre', '2002-03-21', '04125594556', 'moisesflores210303@gmail.com', 'Padre', 5, '2024-05-19', 'Activo'),
+(3, 1, 0, 'Venezolano', 30317640, NULL, NULL, 'Jaiker', 'Jesus', 'Perdomo', 'Palacio', 'Hombre', '2002-11-11', '04120515029', 'palaciojaiker@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
+(4, 4, 4, 'Venezolano', 25753161, 1234567777, 1234567799, 'Wilfran', 'Jose', 'Valera', 'Rincon', 'Hombre', '2000-05-12', '04126722287', 'wilfranvalera@gmail.com', 'Padre', 0, '2024-05-19', 'Activo'),
+(5, 1, 0, 'Venezolano', 13370169, NULL, NULL, 'Mercedez', 'Beatriz', 'Rincon', 'Gonzalez', 'Mujer', '1976-07-23', '04245283478', 'wilfran2496@gmail.com', 'Padre', 3, '2024-06-02', 'Activo'),
+(6, 1, 0, 'Venezolano', 10777922, NULL, NULL, 'Jose', '', 'Laudelino', '', 'Hombre', '1970-01-24', '', '', 'Padre', 3, '2024-06-02', 'Activo'),
+(7, 1, 0, 'Venezolano', 26976416, NULL, NULL, 'Leonardo', '', 'David', '', 'Hombre', '2000-01-05', '', '', 'Hijo(a)', 0, '2024-06-02', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -2295,7 +2299,8 @@ INSERT INTO `tipos_usuarios` (`id_tipo_usuario`, `id_usuario`, `cedula`, `tipo`,
 (1, 1, 31204020, 'Jefe Familia', '2024-05-19', 'Activo'),
 (2, 2, 29868346, 'Jefe Manzana', '2024-05-19', 'Activo'),
 (3, 3, 30317640, 'Jefe UBCH', '2024-05-19', 'Activo'),
-(4, 4, 25753161, 'Jefe Familia', '2024-05-19', 'Activo');
+(4, 4, 25753161, 'Jefe Familia', '2024-05-19', 'Activo'),
+(5, 5, 13370169, 'Jefe Manzana', '2024-06-02', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -2309,6 +2314,7 @@ CREATE TABLE `usuarios` (
   `usuario` varchar(50) NOT NULL,
   `contraseña` varchar(34) NOT NULL,
   `correo` varchar(100) NOT NULL,
+  `tipo_usuario` enum('Jefe Manzana','Jefe UBCH') NOT NULL,
   `status` enum('Activo','Inactivo') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2316,11 +2322,12 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `cedula`, `usuario`, `contraseña`, `correo`, `status`) VALUES
-(1, 31204020, 'jhon', 'jhon', 'kacosvasquez14@gmail.com', 'Activo'),
-(2, 29868346, 'moises', 'moises', 'moisesflores210303@gmail.com', 'Activo'),
-(3, 30317640, 'jaiker', 'jaiker', 'palaciojaiker@gmail.com', 'Activo'),
-(4, 25753161, 'wilfran', 'wilfran', 'wilfranvalera@gmail.com', 'Activo');
+INSERT INTO `usuarios` (`id_usuario`, `cedula`, `usuario`, `contraseña`, `correo`, `tipo_usuario`, `status`) VALUES
+(1, 31204020, 'jhon', 'jhon', 'kacosvasquez14@gmail.com', 'Jefe Manzana', 'Activo'),
+(2, 29868346, 'moises', 'moises', 'moisesflores210303@gmail.com', 'Jefe Manzana', 'Activo'),
+(3, 30317640, 'jaiker', 'jaiker', 'palaciojaiker@gmail.com', 'Jefe Manzana', 'Activo'),
+(4, 25753161, 'wilfran', 'Zaf12345', 'wilfranvalera@gmail.com', 'Jefe UBCH', 'Activo'),
+(5, 13370169, 'mercedez', 'Zaf12345', 'wilfran2496@gmail.com', 'Jefe Manzana', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -2513,19 +2520,19 @@ ALTER TABLE `parroquias`
 -- AUTO_INCREMENT de la tabla `personas`
 --
 ALTER TABLE `personas`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_usuarios`
 --
 ALTER TABLE `tipos_usuarios`
-  MODIFY `id_tipo_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_tipo_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios_grupos_familiares`

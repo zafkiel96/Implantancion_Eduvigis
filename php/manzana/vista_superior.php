@@ -26,12 +26,12 @@ if (isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="../../styles/css/all.min.css">
 </head>
 <body>
-    <div class="container">
+<div class="container">
         <div class="navigation">
-        <ul>
-        <li>
+            <ul>
+                <li>
                     <a href="">
-                    <img src="../../img/ico.png" width="70" height="35" style="margin-top: 20px;">
+                        <img src="../../img/ico.png" width="70" height="35" style="margin-top: 20px;">
                         <span class="title">Santa Eduvigis</span>
                     </a>
                 </li>
@@ -49,12 +49,12 @@ if (isset($_SESSION['user_id'])) {
                 </li>
                 <?php endif; ?>
                 <li>
-
-                <li>
                     <a href="../manzana/manzana.php">
                         <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-road"></i>Manzanas</span>
                     </a>
                 </li>
+                
+
                 <li>
                     <a href="../casa/casa.php">
                         <span class="title"><i style="width: 77%;font-size: 34px;" class="fa-solid fa-house"></i>Casas</span>

@@ -3,11 +3,11 @@ session_start();
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     include 'conexion.php';
-    $sql = "SELECT usuario FROM usuarios WHERE id_usuario = ?";
+    $sql = "SELECT usuario, tipo_usuario FROM usuarios WHERE id_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
-    $stmt->bind_result($usuario);
+    $stmt->bind_result($usuario, $tipo_usuario);
     $stmt->fetch();
     $stmt->close();
 } else {
@@ -28,8 +28,8 @@ if (isset($_SESSION['user_id'])) {
 <body>
     <div class="container">
         <div class="navigation">
-            <ul>
-                <li>
+        <ul>
+        <li>
                     <a href="">
                     <img src="../../img/ico.png" width="70" height="35" style="margin-top: 20px;">
                         <span class="title">Santa Eduvigis</span>
@@ -37,25 +37,47 @@ if (isset($_SESSION['user_id'])) {
                 </li>
                 <li>
                     <a href="../dashboard.php">
-                        <span class="title"><i style="width: 77%;font-size: 34px;" class="fa-solid fa-house"></i>Inicio</span>
+                        <span class="title"><i style="width: 77%;font-size: 38px;" class="fa-solid bx bxs-category"></i>Inicio</span>
+                    </a>
+                </li>
+
+                <?php if ($tipo_usuario != 'Jefe Manzana') : ?>
+                <li>
+                    <a href="../jefe_manzana/jefemanzana.php">
+                        <span class="title"><i style="width: 38%;font-size: 45px;" class='bx bxs-user-detail'></i>Jefe de Manzana</span>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <li>
+
+                <li>
+                    <a href="../manzana/manzana.php">
+                        <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-road"></i>Manzanas</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../beneficio.php">
-                        <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-school"></i>Beneficios</span>
+                    <a href="../casa/casa.php">
+                        <span class="title"><i style="width: 77%;font-size: 34px;" class="fa-solid fa-house"></i>Casas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../beneficio/beneficio.php">
+                        <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-box-open"></i>Beneficios</span>
                     </a>
                 </li>
                 <li>
                     <a href="../habitantes/personas.php">
-                        <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-address-card"></i>Habitantes</span>
+                        <span class="title"><i style="width: 55%;font-size: 34px;" class="fa-solid fa-user"></i>Habitantes</span>
                     </a>
                 </li>
                 <li>
-                    <a href="grpfamiliar.php">
+                    <a href="../grupo_familiar/grpfamiliar.php">
                         <span class="title"><i style="width: 38%;font-size: 34px;" class="fa-solid fa-address-card"></i>Grupos Familiares</span>
                     </a>
                 </li>
+                
             </ul>
+            
         </div>
         <div class="main">
             <div class="topbar">

@@ -48,37 +48,37 @@
     <div class="card">
         <div>
             <div class="numbers"><?php include '../controlador/controlador_dashboard/numhabitantes.php'; ?></div>
-            <div class="cardName">Habitantes</div>
+            <div style='color:#4CAF50;' class="cardName">Habitantes</div>
         </div>
         <div class="iconBox">
-            <i class="fa-solid fa-users"></i>
+            <i style='color:#4CAF50;' class="fa-solid fa-users"></i>
         </div>
     </div>
     <div class="card">
         <div>
             <div class="numbers"><?php include '../controlador/controlador_dashboard/casas.php'; ?></div>
-            <div class="cardName">Casas</div>
+            <div style='color:#4CAF50;' class="cardName">Casas</div>
         </div>
         <div class="iconBox">
-            <i class="fa-solid fa-house-circle-check"></i>
+            <i style='color:#4CAF50;'class="fa-solid fa-house-circle-check"></i>
         </div>
     </div>
     <div class="card">
         <div>
             <div class="numbers"><?php include '../controlador/controlador_dashboard/familias.php'; ?></div>
-            <div class="cardName">Familias</div>
+            <div style='color:#4CAF50;'class="cardName">Familias</div>
         </div>
         <div class="iconBox">
-            <i class="fa-solid fa-people-group"></i>
+            <i style='color:#4CAF50;'class="fa-solid fa-people-group"></i>
         </div>
     </div>
     <div class="card">
         <div>
             <div class="numbers"><?php include '../controlador/controlador_dashboard/beneficios.php'; ?></div>
-            <div class="cardName">Beneficios</div>
+            <div style='color:#4CAF50;'class="cardName">Beneficios</div>
         </div>
         <div class="iconBox">
-            <i class="fa-solid fa-box-open"></i>
+            <i style='color:#4CAF50;'class="fa-solid fa-box-open"></i>
         </div>
     </div>
 </div>

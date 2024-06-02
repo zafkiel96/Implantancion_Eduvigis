@@ -1,56 +1,52 @@
 let data_table;
 let data_table_is_initialized = false;
 
-const data_table_option={
-    //scrollX: "2000px",
-    lengthMenu: [5, 10, 15, 20, 100, 200, 500],
-    columnDefs: [
-        { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6] },
-        { orderable: false, targets: [5, 6] },
-        { searchable: false, targets: [1] }
-        //{ width: "50%", targets: [0] }
-    ],
-    pageLength: 3,
-    destroy: true,
-    language: {
-        lengthMenu: "Mostrar _MENU_ registros por página",
-        zeroRecords: "Ningún usuario encontrado",
-        info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
-        infoEmpty: "Ningún usuario encontrado",
-        infoFiltered: "(filtrados desde _MAX_ registros totales)",
-        search: "Buscar:",
-        loadingRecords: "Cargando...",
-        paginate: {
-            first: "Primero",
-            last: "Último",
-            next: "Siguiente",
-            previous: "Anterior"
-        }
-    }
+const data_table_option = {
+  lengthMenu: [5, 10, 15, 20, 100, 200, 500],
+  columnDefs: [
+    { className: "centered", targets: [0, 1, 2, 3, 4, 5, 6] },
+    { orderable: false, targets: [5, 6] },
+    { searchable: false, targets: [1] },
+  ],
+  pageLength: 3,
+  destroy: true,
+  language: {
+    lengthMenu: "Mostrar _MENU_ registros por página",
+    zeroRecords: "Ningún usuario encontrado",
+    info: "Mostrando de _START_ a _END_ de un total de _TOTAL_ registros",
+    infoEmpty: "Ningún usuario encontrado",
+    infoFiltered: "(filtrados desde _MAX_ registros totales)",
+    search: "Buscar:",
+    loadingRecords: "Cargando...",
+    paginate: {
+      first: "Primero",
+      last: "Último",
+      next: "Siguiente",
+      previous: "Anterior",
+    },
+  },
 };
 
-
-
 const init_data_table = async () => {
-    if (data_table_is_initialized) {
-        data_table.destroy();
-    }
+  if (data_table_is_initialized) {
+    data_table.destroy();
+  }
 
-    await listUsers();
+  await listUsers();
 
-    data_table = $("#datatable_historico").data_table(data_table_option);
+  data_table = $("#datatable_historico").data_table(data_table_option);
 
-    data_table_is_initialized = true;
+  data_table_is_initialized = true;
 };
 
 const listUsers = async () => {
-    try {
-        const response = await fetch("../controlador/consulta_historico.php");
-        const historicos_beneficios = await response.json();
+  try {
+    const response = await fetch("../controlador/consulta_historico.php");
+    const historicos_beneficios = await response.json();
 
-        let content = ``;
-        historicos_beneficios.forEach((historico, index) => {
-            content += `
+    let content = ``;
+    historicos_beneficios.forEach((historico, index) => {
+      content += `
             <tr>
                 <td>${historico.jefe_familia}</td>
                 <td>${historico.grupo_familiar}</td>
@@ -68,13 +64,13 @@ const listUsers = async () => {
                     </td>
             </tr>
             `;
-        });
-        document.getElementById("tbody_historico").innerHTML = content;
-    } catch (ex) {
-        alert("Error: " + ex.message);
-    }
+    });
+    document.getElementById("tbody_historico").innerHTML = content;
+  } catch (ex) {
+    alert("Error: " + ex.message);
+  }
 };
 
 window.addEventListener("DOMContentLoaded", async () => {
-    await init_data_table();
+  await init_data_table();
 });
