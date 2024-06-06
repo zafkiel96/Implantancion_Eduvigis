@@ -44,11 +44,11 @@ function fetchById($id) {
 
 function create() {
     global $conn;
-    $sql = "INSERT INTO personas (id_tipo_usuario, id_grupo_flia, tipo_cedula, cedula, serial_carnet_patria, codigo_carnet_patria, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, genero, fecha_nacimiento, telefono, correo, parentesco, numero_hijos, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO personas (id_tipo_usuario, id_grupo_flia, tipo_cedula, cedula, serial_carnet_patria, codigo_carnet_patria, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, genero, fecha_nacimiento, telefono, correo, parentesco, numero_hijos, status) VALUES (?, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $sql);
     $serial_carnet_patria = empty($_POST['serial_carnet_patria']) ? null : $_POST['serial_carnet_patria'];
     $codigo_carnet_patria = empty($_POST['codigo_carnet_patria']) ? null : $_POST['codigo_carnet_patria'];
-    mysqli_stmt_bind_param($stmt, 'iisssssssssssssss', $_POST['id_tipo_usuario'], $_POST['id_grupo_flia'], $_POST['tipo_cedula'], $_POST['cedula'], $serial_carnet_patria, $codigo_carnet_patria, $_POST['primer_nombre'], $_POST['segundo_nombre'], $_POST['primer_apellido'], $_POST['segundo_apellido'], $_POST['genero'], $_POST['fecha_nacimiento'], $_POST['telefono'], $_POST['correo'], $_POST['parentesco'], $_POST['numero_hijos'], $_POST['status']);
+    mysqli_stmt_bind_param($stmt, 'isssssssssssssss', $_POST['id_tipo_usuario'], $_POST['tipo_cedula'], $_POST['cedula'], $serial_carnet_patria, $codigo_carnet_patria, $_POST['primer_nombre'], $_POST['segundo_nombre'], $_POST['primer_apellido'], $_POST['segundo_apellido'], $_POST['genero'], $_POST['fecha_nacimiento'], $_POST['telefono'], $_POST['correo'], $_POST['parentesco'], $_POST['numero_hijos'], $_POST['status']);
     if (mysqli_stmt_execute($stmt)) {
         echo 'success';
     } else {
@@ -58,11 +58,19 @@ function create() {
 
 function update($id) {
     global $conn;
-    $sql = "UPDATE personas SET id_tipo_usuario = ?, id_grupo_flia = ?, tipo_cedula = ?, cedula = ?, serial_carnet_patria = ?, codigo_carnet_patria = ?, primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, genero = ?, fecha_nacimiento = ?, telefono = ?, correo = ?, parentesco = ?, numero_hijos = ?, status = ? WHERE id_persona = ?";
+    $sql_get_grupo_flia = "SELECT id_grupo_flia FROM personas WHERE id_persona = ?";
+    $stmt_get_grupo_flia = mysqli_prepare($conn, $sql_get_grupo_flia);
+    mysqli_stmt_bind_param($stmt_get_grupo_flia, 'i', $id);
+    mysqli_stmt_execute($stmt_get_grupo_flia);
+    $result_get_grupo_flia = mysqli_stmt_get_result($stmt_get_grupo_flia);
+    $row = mysqli_fetch_assoc($result_get_grupo_flia);
+    $id_grupo_flia = $row['id_grupo_flia'];
+
+    $sql = "UPDATE personas SET id_tipo_usuario = ?, tipo_cedula = ?, cedula = ?, serial_carnet_patria = ?, codigo_carnet_patria = ?, primer_nombre = ?, segundo_nombre = ?, primer_apellido = ?, segundo_apellido = ?, genero = ?, fecha_nacimiento = ?, telefono = ?, correo = ?, parentesco = ?, numero_hijos = ?, status = ? WHERE id_persona = ?";
     $stmt = mysqli_prepare($conn, $sql);
     $serial_carnet_patria = empty($_POST['serial_carnet_patria']) ? null : $_POST['serial_carnet_patria'];
     $codigo_carnet_patria = empty($_POST['codigo_carnet_patria']) ? null : $_POST['codigo_carnet_patria'];
-    mysqli_stmt_bind_param($stmt, 'iisssssssssssssssi', $_POST['id_tipo_usuario'], $_POST['id_grupo_flia'], $_POST['tipo_cedula'], $_POST['cedula'], $serial_carnet_patria, $codigo_carnet_patria, $_POST['primer_nombre'], $_POST['segundo_nombre'], $_POST['primer_apellido'], $_POST['segundo_apellido'], $_POST['genero'], $_POST['fecha_nacimiento'], $_POST['telefono'], $_POST['correo'], $_POST['parentesco'], $_POST['numero_hijos'], $_POST['status'], $id);
+    mysqli_stmt_bind_param($stmt, 'isssssssssssssssi', $_POST['id_tipo_usuario'], $_POST['tipo_cedula'], $_POST['cedula'], $serial_carnet_patria, $codigo_carnet_patria, $_POST['primer_nombre'], $_POST['segundo_nombre'], $_POST['primer_apellido'], $_POST['segundo_apellido'], $_POST['genero'], $_POST['fecha_nacimiento'], $_POST['telefono'], $_POST['correo'], $_POST['parentesco'], $_POST['numero_hijos'], $_POST['status'], $id);
     if (mysqli_stmt_execute($stmt)) {
         echo 'success';
     } else {
